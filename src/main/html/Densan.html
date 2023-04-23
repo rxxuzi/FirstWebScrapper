@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <style>body {
+        color: black;
+    }
+    </style>
+</head>
+
+<body>
+    <h1 id="sample-markdown">Sample Markdown</h1>
+    <p>This is some basic, sample markdown.</p>
+    <h2 id="second-heading">Second Heading</h2>
+<!--    リスト-->
+    <ul>
+        <li>Unordered lists, and:<ol>
+                <li>One</li>
+                <li>Two</li>
+                <li>Three</li>
+            </ol>
+        </li>
+        <li>More</li>
+    </ul>
+
+    <blockquote>
+        <p>Blockquote</p>
+    </blockquote>
+
+    <p>And <strong>bold</strong>, <em>italics</em>, and even <em>italics and later <strong>bold</strong></em>. Even <del>strikethrough</del>. <a href="https://markdowntohtml.com">A link</a> to somewhere.</p>
+    <p>And code highlighting:</p>
+
+    <p>#0. はじめに
+    このテキストはjavaに少しでも興味を持った人が気軽に触れられるようにしたテキストです
+    少しC言語を触れたことがある人や、電算テキストを読破した人なら多分余裕です。</p>
+    <hr>
+    <h2 id="0-1-hello-world-">0.1. Hello World!</h2>
+    <p>まずはjavaを動かしてみましょう
+    まず<code>Main.java</code>というファイルを作って、その<code>Main.java</code>のファイルの中に次のコードを書いてみましょう</p>
+    <pre><code class="lang-java"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span>(<span class="hljs-params">String args[]</span>)</span>{
+            System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"Hello World"</span>);<span class="hljs-comment">//java</span>
+        }
+    }
+    </code></pre>
+    <p>次に先ほど書いたコードをコンパイルすると、コマンドラインに</p>
+<pre><code><span class="hljs-attribute">Hello World</span>
+</code></pre><p>と実行結果が出ると思います。
+これがざっくりとしたjavaでのHello Worldのやり方になります。</p>
+<hr>
+<h2 id="0-2-">0.2. 構造</h2>
+<p>この項では先ほど書いたコードの意味を説明していきたいと思います。
+<code>package</code>については後ほど説明します。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span></span>{
+
+}
+</code></pre>
+<p>この<code>class 名前{}</code>で囲まれた部分の事を<strong>クラス</strong>といいます。</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span>{
+
+}
+</code></pre>
+<p>次に<code>public static ~</code>で囲まれた部分を<strong>メソッド</strong>といい、
+メソッドで囲まれた部分にやりたい処理を書きます
+*この後の内容ではクラス部分とメソッド部分は省略します。</p>
+<p>上記のコードでは<code>System.out.println(&quot;Hello World&quot;);</code>が処理にあたります
+また、コードの中で <code>//</code>とバックスラッシュを2つ入れることによって、<strong>コメント</strong>することができます。
+(コメントとはプログラムに影響を与えずにかける注釈のことです)</p>
+<p><strong>また、javaの決まりとして文末には必ずセミコロン<code>;</code>が必要となります</strong></p>
+<p><code>System.out.println()</code>は<code>()</code>の中身を出力せよという意味です。C言語の<code>printf()</code>と似たような物と考えていいです。
+()の中は、文字列であれば<code>&quot;&quot;</code>ダブルコーテーションで囲み、数値ならそのまま入れることができます。また、<code>()</code>の中に文字列が入っていれば<code>+</code>記号を使って連結することができます。
+そして<code>()</code>の中では計算をすることができます。</p>
+<p><code>System.out.print()</code>と記述する事で、改行せずに出力をすることができます。</p>
+<p>サンプルコード：</p>
+<pre><code class="lang-java"><span class="hljs-keyword">System</span>.out.<span class="hljs-keyword">print</span>(<span class="hljs-string">"Hello "</span>);
+<span class="hljs-keyword">System</span>.out.println(<span class="hljs-string">"world"</span>);
+<span class="hljs-keyword">System</span>.out.println(<span class="hljs-string">"Hello "</span> + <span class="hljs-string">"Java!"</span>);
+<span class="hljs-keyword">System</span>.out.println(<span class="hljs-string">"Number :"</span> + <span class="hljs-number">10</span>);
+<span class="hljs-keyword">System</span>.out.println(<span class="hljs-string">"20"</span> + <span class="hljs-string">"23"</span>);
+<span class="hljs-keyword">System</span>.out.println(<span class="hljs-number">20</span> + <span class="hljs-number">23</span>);
+</code></pre>
+<p>出力：</p>
+<pre><code>Hello world
+Hello Java!
+Number : 10
+<span class="hljs-number">2023</span>
+<span class="hljs-number">43</span>
+</code></pre><p>上記のコードの5行目と6行目の違いは20と23が文字列か数値であるかの違いです。
+5行目は数字が<code>&quot;&quot;</code>で囲まれているので文字列となります。よって<code>()</code>の中では文字列の連結として処理されます。
+6行目は数字がそのまま書かれているので数値扱いとなります。よって<code>()</code>の中では数値の計算処理が行われます。
+数値と文字列の違いは常に意識してコードを書いていきましょう。</p>
+<hr>
+<h2 id="0-3-main-">0.3. mainメソッドの構造</h2>
+<p>この項はmainメソッドの構造について説明します。
+~mainメソッドはおまじないのようなものなので、最初はこの構造の事をしらなくても良いと思います~</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span>{
+}
+</code></pre>
+<p>Javaの mainメソッドの宣言では、これらの条件をすべて満たしている必要があります。</p>
+<ul>
+<li>アクセス修飾子</li>
+<li>static修飾子</li>
+<li>戻り値</li>
+<li>メソッド名</li>
+<li>引数</li>
+</ul>
+<h3 id="-">アクセス修飾子</h3>
+<p><strong><span style="color: red; ">public</span></strong> <em>static void main(String[] args)</em>
+ここは必ず<code>public</code>である必要があり、publicはプログラムの公開範囲を意味していおり、public修飾子を付けたメソッドは、メソッドの定義元のクラスの外部、外側のコードからアクセスできるようになります。</p>
+<h3 id="static-">static修飾子</h3>
+<p><em>public</em> <strong><span style="color: red; ">static</span></strong> <em>void main(String[] args)</em>
+static修飾子を付けたメソッドは、クラスを<strong>インスタンス化</strong><a href="new演算子などを使いインスタンスを生成すること">^1</a>するこ
+となくアクセスできるようになります。
+static修飾子が付いているメソッドの事を静的メソッドと言います</p>
+<h3 id="-">戻り値</h3>
+<p><em>public static</em> <strong><span style="color: red; ">void</span></strong> <em>main(String[] args)</em>
+mainメソッドの戻り値は必ず<strong>void</strong><a href="メソッドの処理結果を呼び出し元へ返す必要がない場合につける戻り値の型">^2</a>でなければなりません。</p>
+<h3 id="-">メソッド名</h3>
+<p><em>public static void</em> <strong><span style="color: red; ">main</span></strong> <em>(String[] args)</em>
+メソッド名は必ず全小文字の<code>main</code>でなければなりません。
+JVMが参照する識別子です。</p>
+<h3 id="-">引数</h3>
+<p><em>public static void main</em> <strong><span style="color: red; ">(String[] args)</span></strong> 
+メソッドの引数には<code>String型の配列</code>、または<code>String型の可変長引数</code>であることが必要です。
+また、<code>args</code>はプログラムが実行されるときに渡される情報を意味しています。</p>
+<hr>
+<h2 id="0-4-java-class-">0.4. javaファイルとclassファイル</h2>
+<p>前の項で<code>Main.java</code>内で<code>helloworld</code>を実行したと思いますが、コンパイルをした際に<code>Main.java</code>を作成したフォルダの中に<code>Main.class</code>が作成されたかと思います。Javaのプログラムを実行するために必要な処理だからです。
+<strong>Javaは<span style="color: #ff00ff; ">オブジェクト指向プログラミング言語</span>で、オブジェクトというものを定義して使います。オブジェクトはclassで定義されます。</strong></p>
+<hr>
+<p><strong>Javaのプログラミングの基本的な流れは以下のようになります。</strong></p>
+<ol>
+<li>ソースファイル（<code>.java</code>）を作成する</li>
+<li>コンパイラ（<code>javac</code>）を使ってソースファイルをバイトコード（<code>.class</code>）に変換する</li>
+<li>JVM<a href="JavaVirtualMachineの略で、Javaで作成されたアプリケーションをWindowsやMacOSなどで動かすために必要となるアプリケーションです。">^3</a>を使ってバイトコード(<code>.class</code>)を実行する</li>
+</ol>
+</body></html>
