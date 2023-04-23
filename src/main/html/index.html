@@ -57,21 +57,23 @@
         }
         </script>
     </head>
+
     <body>
         <form>
-        <table id="table" border="1">
-            <tr>
-            <td>IP</td><td>NAME</td><td>TIME</td><td>VALUE</td><td>LIMIT</td><td>IMAGES</td>
-            </tr>
-            <tr>
-            <td>IPの取得</td>
-            <td><input type="text" id="name" class="name" ></td>
-            <td>時刻を所得</td> <!--ここは時刻を所得-->
-            <td>数値の取得</td> <!---ここはラズパイからとってくる-->
-            <td><input type="number" id="lim" class="lim" ></td>
-            <td>画像の習得</td> 
-            </tr>
-        </table>
+            <table id="table" border="1">
+                <tr>
+                    <td>IP</td><td>NAME</td><td>TIME</td><td>VALUE</td><td>LIMIT</td><td>IMAGES</td>
+                </tr>
+
+                <tr>
+                    <td>IP Acquisition</td>
+                    <td><input type="text" id="name" class="name" ></td>
+                    <td>Get Time</td> <!--ここは時刻を所得-->
+                    <td>Obtaining Values</td> <!---ここはラズパイからとってくる-->
+                    <td><input type="number" id="lim" class="lim" ></td>
+                    <td>Mastering Images</td>
+                </tr>
+            </table>
         </form>
     <p>
         <input type="button" value="INPUT FORM" id="idx">
@@ -89,6 +91,5 @@
         let checkButon = document.getElementById('checkButton');
         checkButton.addEventListener('click', buttonClick);
     </script>
-    </table>
     </body>
 </html>
