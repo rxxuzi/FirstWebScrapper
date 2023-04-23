@@ -18,7 +18,10 @@ public class Main {
 
         File file = new File("./src/main/html/index.html");
         Document doc = Jsoup.parse(file);
-        
-        System.out.println(doc.html());
+        String title = doc.title();
+        String body = doc.body().text();
+        System.out.println("TITLE IS : \"" + title + "\"");
+        System.out.println("BODY IS : \"" + body + "\"");
+//        System.out.println(doc.html());
     }
 }
