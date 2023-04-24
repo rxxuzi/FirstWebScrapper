@@ -24,37 +24,34 @@ public class ImageScraper {
 
         try {
             // ウィキペディアのページにアクセス
-            Document doc = Jsoup.connect("https://en.wikipedia.org/wiki/Friedrich_Nietzsche").get();
-            System.out.println("SUCCESS");
+            Document doc = Jsoup.connect(url).get();
+//            System.out.println("SUCCESS");
+            System.out.println("TITILE IS -> " + doc.title().toUpperCase());
 
             // 画像要素を取得
-            Elements imageElements = doc.select("img[src*=/wiki/File:]");
+            Element elements2 = doc.getElementById("hello");
 
-            int imageCount =  imageElements.size();
-            System.out.println("IMAGE COUNT ->" + imageCount);
+            //Element get by class
+            Elements elements = doc.getElementsByClass("thumbimage");
+            System.out.println("ELEMENTS SIZE IS -> " + elements.size());
 
-            // 画像のURLを取得して、保存する
-            for (Element element : imageElements) {
-                String imageUrl = element.absUrl("src");
-                System.out.println("IMAGE URL ->" + imageUrl);
-                saveImage(imageUrl, saveDir);
+            for (Element element : elements) {
+                String imageUrl = element.attr("src");
+                System.out.println("IMAGE URL IS -> " + imageUrl);
+//                saveImage(imageUrl, saveDir);
             }
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        JFrame jf = new JFrame("SCRAPPER");
-        jf.setSize(500, 500);
-        jf.setVisible(true);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
     // 画像を保存するメソッド
     private static void saveImage(String imageUrl, String saveDir) throws IOException {
         // URL接続を開く
         URL url = new URL(imageUrl);
+        System.out.println(saveDir + imageUrl);
         URLConnection conn = url.openConnection();
 
         // ファイル名を取得
