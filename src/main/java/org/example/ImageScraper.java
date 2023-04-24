@@ -14,30 +14,32 @@ import java.util.ArrayList;
 public class ImageScraper {
     //array list String
     static ArrayList<String> Images = new ArrayList<>();
+    static String saveDirPath = "./rsc/"; // 保存先のディレクトリのpath
     public static void main(String[] args) {
+
 
         String url = "https://en.wikipedia.org/wiki/Friedrich_Nietzsche";
 
-        String saveDir = "./rsc"; // 保存先のディレクトリ
 
         try {
             // ウィキペディアのページにアクセス
             Document doc = Jsoup.connect(url).get();
-            System.out.println("TITILE IS -> " + doc.title().toUpperCase());
+            System.out.println("TITLE IS -> " + doc.title().toUpperCase());
 
             //Element get by class
             Elements elements = doc.getElementsByClass("thumbimage");
             System.out.println("ELEMENTS SIZE IS -> " + elements.size());
 
             for (Element element : elements) {
-                String imageUrl = element.attr("src");
-                System.out.println("IMAGE URL IS -> https:" + imageUrl);
-                Images.add("https:" + imageUrl);
+                String imageUrl = "https:" + element.attr("src");
+                System.out.println("IMAGE URL IS -> " + imageUrl);
+                Images.add(imageUrl);
                 String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
                 System.out.println("FILE NAME IS -> " + fileName);
+                saveImage(imageUrl , fileName);
+
             }
 
-            saveImage(Images.get(0));
             System.out.println("SUCCESS");
 
         } catch (IOException e) {
@@ -46,12 +48,12 @@ public class ImageScraper {
     }
 
     // 画像を保存するメソッド
-    private static void saveImage(String imageUrl) throws IOException {
+    private static void saveImage(String imageUrl , String savePic) throws IOException {
         // URL接続を開く
         URL url = new URL(imageUrl);
         //URLからread
         BufferedImage image = ImageIO.read(url);
-        File outPutFile = new File("./rsc/image.png");
+        File outPutFile = new File(saveDirPath + savePic);
         //ファイルに保存
         ImageIO.write(image, "png", outPutFile);
     }
