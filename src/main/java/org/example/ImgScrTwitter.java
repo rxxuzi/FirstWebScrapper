@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,12 +13,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ImageScraper {
+public class ImgScrTwitter {
     //array list String
     static ArrayList<String> Images = new ArrayList<>();
     static String saveDirPath = "./rsc/pics/"; // 保存先のディレクトリのpath
     static int count = 0;
-    static String url = "https://en.wikipedia.org/wiki/Che_Guevara";
+    static String url = "https://twitter.com/rxxuzi/media";
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         File picDir = new File(saveDirPath);
@@ -30,18 +31,30 @@ public class ImageScraper {
         }
 
         System.out.println("EXIT? -> true or false");
+
         if(scanner.nextBoolean()){
             System.exit(0);
         }
-
         try {
-            // ウィキペディアのページにアクセス
+            Document dcx = Jsoup.connect(url).get();
+            System.out.println(dcx.html());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(url);
+        try {
+            // Xwebbページにアクセス
             Document doc = Jsoup.connect(url).get();
             System.out.println("TITLE IS -> " + doc.title().toUpperCase());
 
             //Element get by class
-            Elements elements = doc.getElementsByClass("thumbimage");
+//            Elements elements = doc.getElementsByClass("thumbimage");
+            //
+//            Elements elements = doc.getElementsByClass("css-9pa8cd");
+            //Element get by <img alt = "image">
+            Elements elements = doc.select(".css-9pa8cd");
             System.out.println("ELEMENTS SIZE IS -> " + elements.size());
+
 
             for (Element element : elements) {
                 String imageUrl = "https:" + element.attr("src");
