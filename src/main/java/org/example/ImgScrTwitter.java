@@ -19,6 +19,7 @@ public class ImgScrTwitter {
     static String saveDirPath = "./rsc/pics/"; // 保存先のディレクトリのpath
     static int count = 0;
     static String url = "https://twitter.com/rxxuzi/media";
+    static String mediaURL = url + "/media";
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         File picDir = new File(saveDirPath);
