@@ -6,12 +6,11 @@ import java.awt.*;
 public class CoreX extends JPanel {
     final int corner = 6;
     static boolean isRunning = false;
-    static String word = "null";
+    public static String word;
     private static double dt = 0.01;
     CoreX(){
         this.setLayout(null);
         this.setBackground(Color.black);
-        //add button and textfield
         JButton btn1 = new JButton("Start");
         btn1.setBounds(10,10,100,30);
         btn1.addActionListener(e -> {
@@ -23,6 +22,8 @@ public class CoreX extends JPanel {
             isRunning = false;
         });
 
+        JLabel label = new JLabel(word);
+        label.setBounds(10,90,200,30);
 
         JTextField textField = new JTextField();
         textField.setBounds(10,50,200,30);
@@ -31,7 +32,11 @@ public class CoreX extends JPanel {
         btn3.setBounds(210,50,30,30);
         btn3.addActionListener(e -> {
             word = textField.getText();
+            label.setForeground(Color.red);
+            label.setText(word);
         });
+
+        this.add(label);
         this.add(btn1);
         this.add(btn2);
         this.add(btn3);
@@ -52,6 +57,8 @@ public class CoreX extends JPanel {
             double y = rad * Math.sin(i * Math.PI / 3 );
             drawHexagon(g, x, y);
         }
+        drawHexagon(g,0,0);
+
         g.setColor(Color.red);
         sleep();
     }

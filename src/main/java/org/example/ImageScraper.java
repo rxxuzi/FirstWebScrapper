@@ -37,10 +37,11 @@ public class ImageScraper {
         try {
             // ウィキペディアのページにアクセス
             Document doc = Jsoup.connect(url).get();
-            System.out.println("TITLE IS -> " + doc.title().toUpperCase());
-
+            Elements title = doc.getElementsByClass("mw-page-title-main");
+            System.out.println(title.text());
             //Element get by class
-            Elements elements = doc.getElementsByClass("thumbimage");
+//            Elements elements = doc.getElementsByClass("thumbimage");
+            Elements elements = doc.getElementsByClass("thumbborder");
             System.out.println("ELEMENTS SIZE IS -> " + elements.size());
 
             for (Element element : elements) {
