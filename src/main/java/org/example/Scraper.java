@@ -17,14 +17,19 @@ import java.util.Objects;
 public class Scraper {
     static ArrayList<String> Images = new ArrayList<>();
     static String saveDirPath = "./rsc/pics/"; // 保存先のディレクトリのpath
-    static int count = 0;
-    public static String tag = "bikini";
 
+    static int count = 0;
+    //取得するタグ
+    public static String tag ;
+    public static int imgCount = 0;
+    //仮置きURL
     private static String tmpUrl = "";
-    private static final int pages = 2;
+    //page数
+    private static final int pages = 5;
+    //成功したかどうかのフラグ
     public static boolean isSuccess = false;
 
-    public static int maxImages = 10;
+    public static int maxImages ;
 
     public Scraper(String tag) {
         Scraper.tag = tag;
@@ -33,6 +38,10 @@ public class Scraper {
     public static void  run(){
         //space -> _
         Scraper.tag = Scraper.tag.replace(" ", "_");
+        //( -> %28
+        Scraper.tag = Scraper.tag.replace("(", "%28");
+        //) -> %29
+        Scraper.tag = Scraper.tag.replace(")", "%29");
 
         String url = "https://danbooru.me/posts?tags=" + tag;
 
@@ -55,29 +64,33 @@ public class Scraper {
                 //今あるページ
                 getImageByElements(Img);
 
-                if (maxImages < count){
+                if (maxImages <= count){
                     break;
                 }
             }
-            isSuccess = true;
+
+            isSuccess = imgCount == maxImages;
+
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("total count -> " + count);
+        System.out.println("\n Total count -> " + count);
     }
 
     private static void getImageByElements(Elements Img) throws IOException {
+        //ページにある全ての画像を取得
         for (Element img : Img) {
+            //取得枚数がmaxImages以上の時にbreak
+            if(maxImages <= count){
+                break;
+            }
+
             //スクレイピング
             String imageUrl = "https://danbooru.me" + img.attr("src");
 
             //同じ画像を拾ってきたらbreak
             if(Objects.equals(tmpUrl, imageUrl)){
                 System.out.println("Same file.");
-                break;
-            }
-
-            if(maxImages < count){
                 break;
             }
 
@@ -91,8 +104,10 @@ public class Scraper {
             //保存先を指定
             String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
             System.out.println("FILE NAME IS -> " + fileName);
+            //ディレクトリに保存
             saveImage(imageUrl , fileName);
             count++;
+            imgCount++;
         }
     }
     // 画像を保存するメソッド

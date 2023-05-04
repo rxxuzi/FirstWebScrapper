@@ -7,7 +7,8 @@ public class Main {
     public static CoreX coreX = new CoreX();
 
     public Main(){
-        frame.setSize(800,800);
+        frame.setSize(850,800);
+        frame.setLocation(500,0);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setResizable(false);

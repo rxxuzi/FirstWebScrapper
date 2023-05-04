@@ -20,13 +20,12 @@ public class CoreX extends JPanel {
 
     private boolean moveD = false;
     private boolean moveR = false;
-    private int rad = 50;
+    private final int rad = 50;
     private final Random random= new Random();
     private final int dx = random.nextInt(5) + 3;
     private final int dy = random.nextInt(5) + 3;
     int x = 500;
     int y = 500;
-    Scraper s = new Scraper(word);
     //テキストフィールド
     JTextField textField = new JTextField();
     //only number 1 ~ 100
@@ -49,10 +48,15 @@ public class CoreX extends JPanel {
         btn1.addActionListener(e -> {
             isRunning = true;
             if (b1 &&  b2){
+                Scraper.imgCount = 0;
+                label0.setText("");
                 Scraper.run();
                 if(Scraper.isSuccess){
                     label0.setForeground(Color.green);
                     label0.setText("Success!!");
+                }else{
+                    label0.setForeground(Color.orange);
+                    label0.setText("Failed!!");
                 }
                 b1 = false;
                 b2 = false;
@@ -102,9 +106,10 @@ public class CoreX extends JPanel {
         btn4.addActionListener(e ->{
             int num = Integer.parseInt(numField.getText());
             Scraper.maxImages = num;
-            System.out.println(num);
+            System.out.println("Number of Images : " + num);
             label2.setText("Max Images : " + num);
             b1 = true;
+            label0.setText("");
         });
 
         //テキスト用ボタン
@@ -120,7 +125,7 @@ public class CoreX extends JPanel {
             label1.setText("Get Images About :" + word);
 
             b2 = true;
-
+            label0.setText("");
         });
 
         //描画
@@ -209,6 +214,7 @@ public class CoreX extends JPanel {
         }
         repaint();
     }
+
     public void test(){
         System.out.println("test");
         System.out.println(word);
