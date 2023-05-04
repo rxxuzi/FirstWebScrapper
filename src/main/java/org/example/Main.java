@@ -14,24 +14,18 @@ import java.util.Locale;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String url = "https://twitter.com/rxxuzi";
+        String url = "https://danbooru.me/posts?tags=dark_elf";
         String iconUrl = null;
 
         Document docx = Jsoup.connect(url).get();
-        Element iconElement = docx.select("img[src*=profile_images]").first();
-        if (iconElement != null) {
-            iconUrl = iconElement.attr("src");
-        }
-        System.out.println(iconUrl);
-//        view();
-    }
+        System.out.println(docx.title());
+//        Element iconElement = docx.select("img[src*=profile_images]").first();
+        //get img class = "has-cropped-true"
+        Elements imgs = docx.getElementsByClass("has-cropped-true");
 
-    private static void view() throws IOException {
-        File file = new File("./src/main/html/index.html");
-        Document doc = Jsoup.parse(file);
-        String title = doc.title();
-        String body = doc.body().html().toUpperCase(Locale.ROOT);
-        System.out.println("TITLE IS : \"" + title + "\"");
-        System.out.println("BODY IS : \"" + body + "\"");
+        for (Element img : imgs) {
+            System.out.println(img.attr("src"));
+        }
+
     }
 }

@@ -17,16 +17,19 @@ public class ImageScraper {
     static ArrayList<String> Images = new ArrayList<>();
     static String saveDirPath = "./rsc/pics/"; // 保存先のディレクトリのpath
     static int count = 0;
+    private static String[] savePic = {".jpg" , ".png" , ".gif" , ".jpeg"};
+    private final static String searchWord = "Che Guevara";
     static String url = "https://en.wikipedia.org/wiki/Che_Guevara";
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         File picDir = new File(saveDirPath);
         File[] delDir = picDir.listFiles();
         if(delDir != null){
             for(File file : delDir){
                 final var delete = file.delete();
             }
-            System.out.println("ALLDELETE");
+            System.out.println("ALL-DELETE");
         }
 
         System.out.println("EXIT? -> true or false");
@@ -54,8 +57,6 @@ public class ImageScraper {
                 count ++;
             }
             System.out.println("FINISHED!!");
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
