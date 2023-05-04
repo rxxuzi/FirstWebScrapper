@@ -17,18 +17,19 @@ import java.util.Objects;
 public class Scraper {
     static ArrayList<String> Images = new ArrayList<>();
     static String saveDirPath = "./rsc/pics/"; // 保存先のディレクトリのpath
-
     //取得するタグ
     public static String tag ;
+    //カウント用変数
     public static int imgCount = 0;
     //仮置きURL
     private static String tmpUrl = "";
     //page数
-    private static final int pages = 5;
+    private static final int pages = 8;
     //成功したかどうかのフラグ
     public static boolean isSuccess = false;
     //合計画像数
     private static int totalImages = 0;
+    //画像数の上限
     public static int maxImages ;
 
     public Scraper(String tag) {

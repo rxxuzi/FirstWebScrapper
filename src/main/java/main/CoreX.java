@@ -148,6 +148,7 @@ public class CoreX extends JPanel {
         btn2.setBounds(10,150,120,30);
         btn2.addActionListener(e -> {
             new DeletePics();
+            label0.setForeground(Color.white);
             label0.setText("All Delete Pics");
         });
 
