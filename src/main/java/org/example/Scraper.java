@@ -18,7 +18,6 @@ public class Scraper {
     static ArrayList<String> Images = new ArrayList<>();
     static String saveDirPath = "./rsc/pics/"; // 保存先のディレクトリのpath
 
-    static int count = 0;
     //取得するタグ
     public static String tag ;
     public static int imgCount = 0;
@@ -28,7 +27,8 @@ public class Scraper {
     private static final int pages = 5;
     //成功したかどうかのフラグ
     public static boolean isSuccess = false;
-
+    //合計画像数
+    private static int totalImages = 0;
     public static int maxImages ;
 
     public Scraper(String tag) {
@@ -50,7 +50,7 @@ public class Scraper {
             System.out.println(docx.title());
             //get img by  tag name = "img" and class = "has-cropped-true"
             Elements Img;
-            for(int i = 1 ; i < pages+1  ; i++) {
+            for(int i = 1 ; i < pages + 1  ; i++) {
                 //page数が2以上の時にurlを変える
                 if(i > 1){
                     url = "https://danbooru.me/posts?page=" + i+ "&tags=" + tag;
@@ -64,7 +64,7 @@ public class Scraper {
                 //今あるページ
                 getImageByElements(Img);
 
-                if (maxImages <= count){
+                if (maxImages <= imgCount){
                     break;
                 }
             }
@@ -74,14 +74,14 @@ public class Scraper {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("\n Total count -> " + count);
+        System.out.println("\n Total count -> " + imgCount);
     }
 
     private static void getImageByElements(Elements Img) throws IOException {
         //ページにある全ての画像を取得
         for (Element img : Img) {
             //取得枚数がmaxImages以上の時にbreak
-            if(maxImages <= count){
+            if(maxImages <= imgCount){
                 break;
             }
 
@@ -105,25 +105,26 @@ public class Scraper {
             String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
             System.out.println("FILE NAME IS -> " + fileName);
             //ディレクトリに保存
-            saveImage(imageUrl , fileName);
-            count++;
+            saveImage(imageUrl);
             imgCount++;
+            totalImages++;
         }
     }
     // 画像を保存するメソッド
-    private static void saveImage(String imageUrl , String savePic) throws IOException {
+    private static void saveImage(String imageUrl) throws IOException {
         // URL接続を開く
         URL url = new URL(imageUrl);
         //URLからread
         BufferedImage image = ImageIO.read(url);
         if(image != null){
-            File outPutFile = new File(saveDirPath + tag + count+ ".png");
+            //ファイル指定
+            File outPutFile = new File(saveDirPath + totalImages +"-"+tag + imgCount+ ".png");
             //ファイルに保存
             ImageIO.write(image, "png", outPutFile);
 
-            System.out.println("("+count + ") SUCCESS -> " + outPutFile.getPath().toUpperCase());
+            System.out.println("("+imgCount + ") SUCCESS -> " + outPutFile.getPath().toUpperCase());
         }else{
-            System.out.println("("+count + ") FAIL -> " + imageUrl.toUpperCase());
+            System.out.println("("+imgCount+ ") FAIL -> " + imageUrl.toUpperCase());
         }
     }
 }
