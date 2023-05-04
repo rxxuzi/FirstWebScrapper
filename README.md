@@ -1,3 +1,2 @@
-# FirstWebScrapper
-
-テスト段階のプロジェクトです。
+# ScrapeHexagon
+## WIP
