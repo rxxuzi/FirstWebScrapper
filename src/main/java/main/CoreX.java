@@ -1,10 +1,9 @@
-package io;
+package main;
 
 import org.example.Scraper;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.Random;
 
 public class CoreX extends JPanel {
@@ -24,10 +23,13 @@ public class CoreX extends JPanel {
     private final int dy = random.nextInt(5) + 3;
     int x = 500;
     int y = 500;
+    Scraper s = new Scraper(word);
 
     CoreX(){
+
         this.setLayout(null);
         this.setBackground(Color.black);
+
         JButton btn1 = new JButton("Start");
         btn1.setBounds(10,10,100,30);
         btn1.addActionListener(e -> {
@@ -45,6 +47,13 @@ public class CoreX extends JPanel {
         JTextField textField = new JTextField();
         textField.setBounds(10,50,200,30);
 
+        //only number 1 ~ 100
+        JTextField numFiled = new JTextField();
+        numFiled.setBounds(10,130,200,30);
+        numFiled.setText("1");
+        JButton btn4 = new JButton("Set");
+        btn4.setBounds(120,130,100,30);
+
         JButton btn3 = new JButton();
         btn3.setBounds(210,50,30,30);
         btn3.addActionListener(e -> {
@@ -53,16 +62,20 @@ public class CoreX extends JPanel {
             label.setText(word);
             Scraper.tag = textField.getText();
 
+            label.setForeground(Color.BLUE);
+            label.setText("Get Images... :" + word);
+
             if (word != null){
                 start = true;
                 try {
-                    Scraper sc = new Scraper(word);
-                    if(sc.isSuccess){
-                        label.setForeground(Color.green);
-                        label.setText("Success!!");
-                    }
-                } catch (IOException ex) {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
+                }
+                s.run();
+                if(s.isSuccess){
+                    label.setForeground(Color.green);
+                    label.setText("Success!!");
                 }
             }
 
@@ -72,7 +85,12 @@ public class CoreX extends JPanel {
         this.add(btn1);
         this.add(btn2);
         this.add(btn3);
+        this.add(btn4);
+        this.add(numFiled);
         this.add(textField);
+
+
+
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -1,10 +1,10 @@
 package org.example;
 
-import io.Main;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -24,19 +24,23 @@ public class Scraper {
     private static final int pages = 2;
     public boolean isSuccess = false;
 
-    public Scraper(String tag) throws IOException {
+    public static int maxImages = 10;
 
+    public Scraper(String tag) {
         Scraper.tag = tag;
+    }
+    public void run(){
+
+        //space -> _
+        Scraper.tag = Scraper.tag.replace(" ", "_");
 
         String url = "https://danbooru.me/posts?tags=" + tag;
 
-        Document docx = Jsoup.connect(url).get();
-        System.out.println(docx.title());
-
-        //get img by  tag name = "img" and class = "has-cropped-true"
-        Elements Img;
-
         try{
+            Document docx = Jsoup.connect(url).get();
+            System.out.println(docx.title());
+            //get img by  tag name = "img" and class = "has-cropped-true"
+            Elements Img;
             for(int i = 1 ; i < pages+1  ; i++) {
                 //page数が2以上の時にurlを変える
                 if(i > 1){
@@ -50,14 +54,16 @@ public class Scraper {
                 System.out.println(url);
                 //今あるページ
                 getImageByElements(Img);
+
+                if (maxImages < count){
+                    break;
+                }
             }
             isSuccess = true;
         }catch (Exception e){
             e.printStackTrace();
         }
         System.out.println("total count -> " + count);
-
-
     }
 
     private static void getImageByElements(Elements Img) throws IOException {
@@ -68,6 +74,10 @@ public class Scraper {
             //同じ画像を拾ってきたらbreak
             if(Objects.equals(tmpUrl, imageUrl)){
                 System.out.println("Same file.");
+                break;
+            }
+
+            if(maxImages < count){
                 break;
             }
 
