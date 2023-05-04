@@ -3,7 +3,7 @@ package main;
 import javax.swing.*;
 
 public class Main {
-    public static JFrame frame = new JFrame("interface");
+    public static JFrame frame = new JFrame("Scraping Hexagon");
     public static CoreX coreX = new CoreX();
     public static void main(String[] args) {
         //get java version
