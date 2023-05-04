@@ -1,7 +1,10 @@
 package io;
 
+import org.example.Scraper;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.Random;
 
 public class CoreX extends JPanel {
@@ -10,7 +13,7 @@ public class CoreX extends JPanel {
     public static Boolean start = false;
 
     final int corner = 6;
-    static boolean isRunning = false;
+    static boolean isRunning = true;
     private static double dt = 0.01;
 
     private boolean moveD = false;
@@ -48,9 +51,21 @@ public class CoreX extends JPanel {
             word = textField.getText();
             label.setForeground(Color.red);
             label.setText(word);
+            Scraper.tag = textField.getText();
+
             if (word != null){
                 start = true;
+                try {
+                    Scraper sc = new Scraper(word);
+                    if(sc.isSuccess){
+                        label.setForeground(Color.green);
+                        label.setText("Success!!");
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
+
         });
 
         this.add(label);
@@ -131,5 +146,9 @@ public class CoreX extends JPanel {
             dt += 0.04;
         }
         repaint();
+    }
+    public void test(){
+        System.out.println("test");
+        System.out.println(word);
     }
 }

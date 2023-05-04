@@ -1,6 +1,6 @@
 package org.example;
 
-import io.Interface;
+import io.Main;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,18 +14,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
-public class Main {
+public class Scraper {
     static ArrayList<String> Images = new ArrayList<>();
     static String saveDirPath = "./rsc/pics/"; // 保存先のディレクトリのpath
     static int count = 0;
-    public static final String tag = "bikini";
+    public static String tag = "bikini";
+
     private static String tmpUrl = "";
     private static final int pages = 2;
+    public boolean isSuccess = false;
 
-    public static void main(String[] args) throws IOException {
+    public Scraper(String tag) throws IOException {
 
-//        Interface gui = new Interface();
-
+        Scraper.tag = tag;
 
         String url = "https://danbooru.me/posts?tags=" + tag;
 
@@ -50,9 +51,13 @@ public class Main {
                 //今あるページ
                 getImageByElements(Img);
             }
+            isSuccess = true;
         }catch (Exception e){
             e.printStackTrace();
         }
+        System.out.println("total count -> " + count);
+
+
     }
 
     private static void getImageByElements(Elements Img) throws IOException {
