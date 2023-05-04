@@ -1,19 +1,16 @@
 package org.example;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
-import java.io.FileOutputStream;
-import java.net.URL;
-import java.net.URLConnection;
+
+import io.Interface;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 
@@ -26,6 +23,9 @@ public class Main {
     private static final int pages = 2;
 
     public static void main(String[] args) throws IOException {
+
+//        Interface gui = new Interface();
+
 
         String url = "https://danbooru.me/posts?tags=" + tag;
 
@@ -78,7 +78,6 @@ public class Main {
             System.out.println("FILE NAME IS -> " + fileName);
             saveImage(imageUrl , fileName);
             count++;
-
         }
     }
     // 画像を保存するメソッド

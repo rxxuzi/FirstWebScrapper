@@ -2,12 +2,26 @@ package io;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class CoreX extends JPanel {
+    //検索ワードを設定
+    public static String word;
+    public static Boolean start = false;
+
     final int corner = 6;
     static boolean isRunning = false;
-    public static String word;
     private static double dt = 0.01;
+
+    private boolean moveD = false;
+    private boolean moveR = false;
+    private int rad = 50;
+    private final Random random= new Random();
+    private final int dx = random.nextInt(5) + 3;
+    private final int dy = random.nextInt(5) + 3;
+    int x = 500;
+    int y = 500;
+
     CoreX(){
         this.setLayout(null);
         this.setBackground(Color.black);
@@ -34,6 +48,9 @@ public class CoreX extends JPanel {
             word = textField.getText();
             label.setForeground(Color.red);
             label.setText(word);
+            if (word != null){
+                start = true;
+            }
         });
 
         this.add(label);
@@ -48,6 +65,7 @@ public class CoreX extends JPanel {
     }
     private void draw(Graphics g){
 
+        drawBall(g);
         g.setColor(Color.white);
         g.setColor(Color.GREEN);
 
@@ -59,9 +77,38 @@ public class CoreX extends JPanel {
         }
         drawHexagon(g,0,0);
 
+
         g.setColor(Color.red);
         sleep();
     }
+
+
+    private void drawBall(Graphics g) {
+        g.setColor(Color.RED);
+        g.fillOval(x,y,rad,rad);
+        moveBall();
+    }
+
+    private void moveBall() {
+        if(isRunning){
+            if(moveD) y += dy; else y -= dy;
+            if(moveR) x += dx; else x -= dx;
+        }
+
+        if(x >= getWidth() - rad){
+            moveR = false;
+        }
+        if(x <= 0){
+            moveR = true;
+        }
+        if(y >= getHeight() - rad){
+            moveD = false;
+        }
+        if(y <= 0){
+            moveD = true;
+        }
+    }
+
     private void drawHexagon(Graphics g , double dx , double dy){
         g.setColor(Color.WHITE);
         int[] x = new int[corner];
