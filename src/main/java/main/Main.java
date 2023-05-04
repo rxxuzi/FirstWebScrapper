@@ -10,7 +10,7 @@ public class Main {
         System.out.println("JDK Version -> " + System.getProperty("java.version"));
         //create gui
         frame.setSize(850,800);
-        frame.setLocation(500,0);
+        frame.setLocation(500,70);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setResizable(false);

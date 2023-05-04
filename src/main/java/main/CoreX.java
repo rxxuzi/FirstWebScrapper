@@ -70,7 +70,7 @@ public class CoreX extends JPanel {
                 b2 = false;
                 //labelを無効にする
                 label1.setText("");
-                label2.setText("");
+//                label2.setText("");
             }else if(!b1 && b2){
                 label0.setForeground(Color.red);
                 label0.setText("Please input a word.");
@@ -146,7 +146,10 @@ public class CoreX extends JPanel {
         //picsディレクトリ内のファイルを削除する
         JButton btn2 = new JButton("Del Pics");
         btn2.setBounds(10,150,120,30);
-        btn2.addActionListener(e -> new DeletePics());
+        btn2.addActionListener(e -> {
+            new DeletePics();
+            label0.setText("All Delete Pics");
+        });
 
         //描画
         this.add(label0);
