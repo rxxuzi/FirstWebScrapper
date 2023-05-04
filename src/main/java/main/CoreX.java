@@ -3,6 +3,10 @@ package main;
 import org.example.Scraper;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.util.Random;
 
@@ -24,35 +28,58 @@ public class CoreX extends JPanel {
     int x = 500;
     int y = 500;
     Scraper s = new Scraper(word);
+    //テキストフィールド
+    JTextField textField = new JTextField();
+    JLabel label = new JLabel(word);
 
     CoreX(){
 
         this.setLayout(null);
         this.setBackground(Color.black);
 
-        JButton btn1 = new JButton("Start");
+        JButton btn1 = new JButton("Run!");
         btn1.setBounds(10,10,100,30);
         btn1.addActionListener(e -> {
             isRunning = true;
-        });
-        JButton btn2 = new JButton("Stop");
-        btn2.setBounds(120,10,100,30);
-        btn2.addActionListener(e -> {
-            isRunning = false;
+            Scraper.run();
+            if(Scraper.isSuccess){
+                label.setForeground(Color.green);
+                label.setText("Success!!");
+            }
         });
 
-        JLabel label = new JLabel(word);
+
         label.setBounds(10,90,200,30);
 
-        JTextField textField = new JTextField();
+
         textField.setBounds(10,50,200,30);
 
         //only number 1 ~ 100
-        JTextField numFiled = new JTextField();
-        numFiled.setBounds(10,130,200,30);
-        numFiled.setText("1");
+        JTextField numField = new JTextField();
+        numField.setBounds(10,120,90,30);
+        numField.setText("1");
+        ((AbstractDocument) numField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string,
+                                     AttributeSet attr) throws BadLocationException {
+                fb.insertString(offset, string.replaceAll("[^0-9]", ""), attr);
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text,
+                                AttributeSet attrs) throws BadLocationException {
+                fb.replace(offset, length, text.replaceAll("[^0-9]", ""), attrs);
+            }
+        });
+        
         JButton btn4 = new JButton("Set");
-        btn4.setBounds(120,130,100,30);
+        btn4.setBounds(100,120,70,30);
+        btn4.addActionListener(e ->{
+            //get numfield value
+            int num = Integer.parseInt(numField.getText());
+            Scraper.maxImages = num;
+            System.out.println(num);
+        });
 
         JButton btn3 = new JButton();
         btn3.setBounds(210,50,30,30);
@@ -63,7 +90,7 @@ public class CoreX extends JPanel {
             Scraper.tag = textField.getText();
 
             label.setForeground(Color.BLUE);
-            label.setText("Get Images... :" + word);
+            label.setText("Get Images About:" + word);
 
             if (word != null){
                 start = true;
@@ -72,21 +99,16 @@ public class CoreX extends JPanel {
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-                s.run();
-                if(s.isSuccess){
-                    label.setForeground(Color.green);
-                    label.setText("Success!!");
-                }
+
             }
 
         });
 
         this.add(label);
         this.add(btn1);
-        this.add(btn2);
         this.add(btn3);
         this.add(btn4);
-        this.add(numFiled);
+        this.add(numField);
         this.add(textField);
 
 

@@ -22,15 +22,15 @@ public class Scraper {
 
     private static String tmpUrl = "";
     private static final int pages = 2;
-    public boolean isSuccess = false;
+    public static boolean isSuccess = false;
 
     public static int maxImages = 10;
 
     public Scraper(String tag) {
         Scraper.tag = tag;
     }
-    public void run(){
 
+    public static void  run(){
         //space -> _
         Scraper.tag = Scraper.tag.replace(" ", "_");
 
